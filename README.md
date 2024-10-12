@@ -14,4 +14,4 @@ call{_handle = [(thisList select 0)] execVM "scripts\vehicle\ServiceGround.sqf";
 jets does work but since were not using them yet no point in placeing it 
 after putting the code and script folder into the mission file save then reopen this should execute the scripts so they work then test it out
 
-**As for the init file place into the mission folder then save and reopen the mission file place the marker down name it Camp "Talvisota" this will create a safezone within 50 meters of it**
+**As for the init file place into the mission folder then save and reopen the mission file place the marker down name it Camp Talvisota this will create a safezone within 50 meters of it**
