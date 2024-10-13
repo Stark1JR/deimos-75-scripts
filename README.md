@@ -3,7 +3,7 @@ only for deimos 75th company
 
 
 for these scripts to work place 3 trigger then in variable of the triggers name them ground heli and jets 
-after that set activation to anybody and activation type to present tick server only 
+after that set activation to anyplayer and activation type to present tick server only 
 then in condition of the trigger delete this then place this code into it call{{_x iskindof "landvehicle" && speed _x < 1} count thislist > 0  } this would be for ground 
 and this for helicopter call{{_x iskindof "helicopter" && isTouchingGround _x && speed _x < 1} count thislist > 0  } 
 then in the on activation place this 
