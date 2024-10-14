@@ -1,0 +1,95 @@
+Steps:
+Create a Supply Crate: Place a supply crate in the editor (e.g., Box_NATO_Equip_F) at a location where players can access it.
+
+Create a Vehicle Marker: Create a marker named vehicleMarker (or any name you prefer) where players can claim vehicles.
+
+Add the Script: Create a new script file (e.g., supplySystem.sqf) and paste the following code into it:
+
+sqf
+Copy code
+// supplySystem.sqf
+
+// Define the marker for claiming vehicles and the vehicle list
+private["_marker", "_vehiclePos", "_vehicles", "_suppliesNeeded"];
+_marker = "vehicleMarker"; // Change this to your marker name
+_vehicles = [
+    ["B_MRAP_01_F", "Ifrit"], // Format: [classname, displayName]
+    ["B_T_Truck_01_transport_F", "Truck"],
+    ["B_MBT_01_cannon_F", "Tank"]
+];
+_suppliesNeeded = 5; // Number of supplies needed to claim a vehicle
+
+// Function to give supplies to the player
+addSupplies = {
+    params ["_amount"];
+    player setVariable ["supplies", player getVariable ["supplies", 0] + _amount];
+    hint format ["You received %1 supplies. Total: %2", _amount, player getVariable ["supplies", 0]];
+};
+
+// Create a supply crate with the option to gather supplies
+createSupplyCrate = {
+    private["_supplyCrate"];
+    _supplyCrate = createVehicle ["Box_NATO_Equip_F", position player, [], 0, "NONE"];
+    _supplyCrate addAction ["Gather Supplies", {
+        addSupplies 1; // Adjust this for how many supplies to give
+    }];
+};
+
+// Get the position of the vehicle marker
+_vehiclePos = getMarkerPos _marker;
+
+// Function to show the vehicle claiming menu
+showVehicleMenu = {
+    private["_menuItems"];
+    _menuItems = [];
+
+    // Create menu items for vehicle claiming
+    {
+        _menuItems pushBack format ["%1 - %2", _x select 1, _x select 0];
+    } forEach _vehicles;
+
+    // Show the menu
+    _selection = call BIS_fnc_selectMenu _menuItems;
+
+    // Handle vehicle selection
+    if (!isNil "_selection") then {
+        // Check supplies
+        if (player getVariable ["supplies", 0] >= _suppliesNeeded) then {
+            _vehicleClass = _vehicles select _selection select 0;
+            _newVehicle = createVehicle [_vehicleClass, player position player, [], 0, "NONE"];
+            player setVariable ["supplies", player getVariable ["supplies", 0] - _suppliesNeeded]; // Deduct supplies
+            hint format ["You have claimed a %1. Supplies remaining: %2", _vehicles select _selection select 1, player getVariable ["supplies", 0]];
+        } else {
+            hint "Not enough supplies to claim this vehicle.";
+        };
+    };
+};
+
+// Check if the player is near the vehicle marker and open the menu
+while {true} do {
+    if (player distance _vehiclePos < 5) then {
+        if (inputAction "OpenMenu" > 0) then {
+            showVehicleMenu;
+        };
+    };
+
+    // Sleep for a short period to reduce performance impact
+    sleep 1;
+};
+
+// Create a supply crate at the start of the mission
+createSupplyCrate;
+Bind the Key for Opening the Menu: Bind a key (e.g., "F2") in your controls to the OpenMenu action to trigger the vehicle claiming menu.
+
+Execute the Script on Server Start: To run the script when the server starts, add the following line to your init.sqf or in a suitable server-side script:
+
+sqf
+Copy code
+[] execVM "supplySystem.sqf";
+Explanation:
+Supply Crate: The script creates a supply crate that players can interact with to gather supplies.
+Vehicle List: Customize the _vehicles array with the class names and display names of the vehicles you want to include.
+Supply Management: The script tracks supplies using a variable (supplies) and checks if the player has enough supplies to claim a vehicle. Adjust the _suppliesNeeded variable to set the supply cost for each vehicle.
+Menu Display: Players can approach the vehicle marker and press the bound key to open the menu and claim vehicles if they have enough supplies.
+Testing:
+Save your files and load the mission in Arma 3 to test the supply system and vehicle claiming functionality.
