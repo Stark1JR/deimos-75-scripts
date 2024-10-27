@@ -1,9 +1,11 @@
 ///////////////////////////////////
 // Simple Vehicle Repair & Flip Vehicle Script For Arma 3
 // by Cpl Acid Drexl
+///////////////////////////////////
 
-if ("Toolkit" in (items player) then //check for toolkit
+_items = items player;
 
+if ("ToolKit" in _items) then 
 {
 _timeForRepair = 5;
 
@@ -25,14 +27,5 @@ _vehicle = nil;
 
 _vehicle = _this select 0;
 
-_vehicle setvectorup [0,0,1];
-
-}
-
-else
-
-{
-
-hint "Toolkit required!";
-
-};
+_vehicle setvectorup [0,0,1]
+}; 
