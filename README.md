@@ -5,13 +5,13 @@ for these scripts to work place 1 trigger then in variable of the triggers name 
 after that set activation to anyplayer and activation type to present tick server only and repeatable 
 then in condition of the trigger delete this then place this code into it
 
-helicotper place a crate then varible 1
+helicotper place a crate then call it varible 1
 this addAction [("<t color=""#66FFFF"">" + ("Repair/Flip") +"</t>"), "repair.sqf",[],1,false,true];
 
-Gorund place a crate varible 2
+Gorund place a crate then call it varible 2
 this addAction [("<t color=""#66FFFF"">" + ("Repair/Flip") +"</t>"), "repair.sqf",[],1,false,true];
 
-jets/planes place a crate varible 4
+jets/planes place a crate then call it varible 3
 this addAction [("<t color=""#66FFFF"">" + ("Repair/Flip") +"</t>"), "repair.sqf",[],1,false,true];
 
 as for giveing medic and engineer perms this addAction["<t color='#c8a000'>Assign Medic Perms</t>",{player setUnitTrait ["Medic",true];},nil,2.5,true,true,"","true",5,false,"",""];
@@ -22,4 +22,4 @@ place on object needs to be in eden tho
 
 after putting the code and script folder into the mission file save then reopen this should execute the scripts so they work then test it out
 
-**As for the init file place into the mission folder then save and reopen the mission file place the marker down name it Camp Talvisota this will create a safezone within 80 meters of it place a trigger next to the marker and do activation anyplayer tick both repeatable and server then on activation code part put the in player setVariable ['IMS_IsUnitInvicibleScripted',1,true]; this will make you immune to the melee set both x and z to 80**
+**As for the init file place into the mission folder then save and reopen the mission file place the marker down name it Camp Talvisota this will create a safezone within 80 meters of it**
